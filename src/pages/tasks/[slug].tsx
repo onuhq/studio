@@ -333,7 +333,7 @@ export default function TaskDetails() {
                   </div>
                   <div style={{ maxHeight: '700px' }} className="border-t border-gray-200 px-4 py-5 sm:px-6 overflow-y-auto">
                     <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                      {(input) ? Object.keys(input).map(fieldKey => {
+                      {(input && Object.keys(input).length > 0) ? Object.keys(input).map(fieldKey => {
                         // @ts-ignore
                         const field = input[fieldKey];
                         return (
