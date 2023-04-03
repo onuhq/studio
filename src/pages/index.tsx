@@ -38,18 +38,32 @@ function EmptyState() {
 
 
 export default function Home() {
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [unpaginatedTasks, setUnpaginatedTasks] = useState<Task[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [page, setPage] = useState(0);
 
   const fetchTasks = async () => {
     const res = await axios.get('/api/tasks')
-    setTasks(res.data.tasks)
+    setUnpaginatedTasks(res.data.tasks)
     setIsLoading(false)
   }
 
   useEffect(() => {
     fetchTasks()
   }, [])
+
+
+  const pageSize = 10;
+
+  const tasks = unpaginatedTasks.slice(page * pageSize, (page + 1) * pageSize);
+
+  const getCurrentPageSize = () => {
+    let num = (pageSize * page) + pageSize
+    if (num > unpaginatedTasks.length) {
+      num = unpaginatedTasks.length
+    }
+    return num
+  }
 
   return (
     <>
@@ -92,6 +106,12 @@ export default function Home() {
                           className="bg-slate-200 px-6 py-3 text-right text-sm font-semibold text-slate-700"
                           scope="col"
                         >
+                          TYPE
+                        </th>
+                        <th
+                          className="bg-slate-200 px-6 py-3 text-right text-sm font-semibold text-slate-700"
+                          scope="col"
+                        >
                           OWNER
                         </th>
                       </tr>
@@ -111,6 +131,9 @@ export default function Home() {
                                 </p>
                               </Link>
                             </div>
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4 text-center font-semibold text-xs text-slate-800">
+                            <div className='bg-slate-300 py-1 px-2 rounded-lg'>{'Nodejs'}</div>
                           </td>
                           <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
                             {task.owner ? `${task.owner}` : "Unknown"}
@@ -140,32 +163,40 @@ export default function Home() {
                       size='xl'
                     />
                   </div>}
-                  {/* Pagination
+                  {/* Pagination */}
                   <div
                     className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
                     aria-label="Pagination"
                   >
                     <div className="hidden sm:block">
                       <p className="text-sm text-gray-700">
-                        Showing <span className="font-medium">{tasks.length > 0 ? 1 : 0}</span> to <span className="font-medium">{tasks.length}</span> of{' '}
-                        <span className="font-medium">{tasks.length}</span> results
+                        Showing <span className="font-medium">{tasks.length > 0 ? (pageSize * page) + 1 : 0}</span> to <span className="font-medium">{getCurrentPageSize()}</span> of{' '}
+                        <span className="font-medium">{unpaginatedTasks.length}</span> results
                       </p>
                     </div>
                     <div className="flex flex-1 justify-between sm:justify-end">
-                      <a
-                        href="#"
+                      <div
+                        onClick={() => {
+                          if (page > 0) {
+                            setPage(page - 1)
+                          }
+                        }}
                         className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
                       >
                         Previous
-                      </a>
-                      <a
-                        href="#"
+                      </div>
+                      <div
+                        onClick={() => {
+                          if (page < Math.ceil(unpaginatedTasks.length / pageSize) - 1) {
+                            setPage(page + 1)
+                          }
+                        }}
                         className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
                       >
                         Next
-                      </a>
+                      </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>

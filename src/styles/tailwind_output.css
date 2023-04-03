@@ -749,16 +749,16 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
 
+.cursor-default {
+  cursor: default !important;
+}
+
 .cursor-not-allowed {
   cursor: not-allowed !important;
 }
 
 .cursor-pointer {
   cursor: pointer !important;
-}
-
-.cursor-default {
-  cursor: default !important;
 }
 
 .appearance-none {
@@ -975,6 +975,11 @@ video {
   background-color: rgb(226 232 240 / var(--tw-bg-opacity)) !important;
 }
 
+.bg-slate-300 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(203 213 225 / var(--tw-bg-opacity)) !important;
+}
+
 .bg-slate-700 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity)) !important;
@@ -1057,16 +1062,6 @@ video {
   padding-bottom: 2rem !important;
 }
 
-.px-1 {
-  padding-left: 0.25rem !important;
-  padding-right: 0.25rem !important;
-}
-
-.px-0 {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
-}
-
 .pb-1 {
   padding-bottom: 0.25rem !important;
 }
@@ -1085,10 +1080,6 @@ video {
 
 .pr-0 {
   padding-right: 0px !important;
-}
-
-.pr-3 {
-  padding-right: 0.75rem !important;
 }
 
 .pt-1 {
@@ -1176,15 +1167,6 @@ video {
   line-height: 1.25 !important;
 }
 
-.leading-3 {
-  line-height: .75rem !important;
-}
-
-.text-blue-500 {
-  --tw-text-opacity: 1 !important;
-  color: rgb(59 130 246 / var(--tw-text-opacity)) !important;
-}
-
 .text-gray-100 {
   --tw-text-opacity: 1 !important;
   color: rgb(243 244 246 / var(--tw-text-opacity)) !important;
@@ -1238,6 +1220,11 @@ video {
 .text-slate-700 {
   --tw-text-opacity: 1 !important;
   color: rgb(51 65 85 / var(--tw-text-opacity)) !important;
+}
+
+.text-slate-800 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(30 41 59 / var(--tw-text-opacity)) !important;
 }
 
 .text-white {
@@ -1567,16 +1554,6 @@ a {
     padding-right: 2rem !important;
   }
 
-  .sm\:px-2 {
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
-  }
-
-  .sm\:px-3 {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
-  }
-
   .sm\:pr-2 {
     padding-right: 0.5rem !important;
   }
@@ -1623,10 +1600,6 @@ a {
 @media (min-width: 1024px) {
   .lg\:col-span-1 {
     grid-column: span 1 / span 1 !important;
-  }
-
-  .lg\:col-span-2 {
-    grid-column: span 2 / span 2 !important;
   }
 
   .lg\:col-span-3 {
