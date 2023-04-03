@@ -181,7 +181,7 @@ export default function Home() {
                             setPage(page - 1)
                           }
                         }}
-                        className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                        className={classNames(page > 0 ? "cursor-pointer hover:bg-gray-50" : "cursor-not-allowed", "relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700")}
                       >
                         Previous
                       </div>
@@ -191,7 +191,7 @@ export default function Home() {
                             setPage(page + 1)
                           }
                         }}
-                        className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                        className={classNames((page < Math.ceil(unpaginatedTasks.length / pageSize) - 1) ? "cursor-pointer hover:bg-gray-50" : "cursor-not-allowed", "relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 ")}
                       >
                         Next
                       </div>
