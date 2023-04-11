@@ -118,7 +118,7 @@ export default function TaskDetails() {
         const formattedInput = task.input;
         // get the type
         const fieldType = getFieldById(id, formattedInput)?.type;
-        const fieldRequired = !!getFieldById(id, formattedInput)?.required;
+        const fieldRequired = getFieldById(id, formattedInput)?.required !== false;
         let validatedValue: string | number | boolean | any[] = value;
         if (fieldType === "number" && typeof value === "string") {
           validatedValue = parseInt(value);
@@ -180,6 +180,22 @@ export default function TaskDetails() {
           continue;
         }
       }
+      if (getFieldById(fv.id, input)?.type === "email") {
+        // return false is the value is not a valid email
+        const emailIsValid = (email: string) => {
+
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        }
+
+        if (fv.required && !fv.value) {
+          return false
+        }
+
+        if (!emailIsValid(fv.value as string)) {
+          return false;
+        }
+
+      }
       if (fv.required && !fv.value) {
         return false
       }
@@ -205,10 +221,11 @@ export default function TaskDetails() {
       case "number":
       case "text":
         const isNumber = field.type === "number";
-        inputField = (<Input
-          onChange={(e) => updateFieldValue(fieldKey, e.target.value)}
-          required={field.required !== false}
-          type={isNumber ? "number" : "text"} />)
+        const type = isNumber ? "number" : "text";
+        inputField = (
+          // @ts-ignore
+          <Input onChange={(e) => updateFieldValue(fieldKey, e.target.value)} required={field.required !== false} type={type} />
+        )
         break;
       case "select":
         inputField = (
@@ -231,6 +248,13 @@ export default function TaskDetails() {
         inputField = (
           <FileUploader required={field.required !== false} handleChange={(file: any) => readFile(fieldKey, file)} name="file" types={fileTypes} />
         )
+        break;
+      case "email":
+        inputField = (
+          <Input
+            onChange={(e) => updateFieldValue(fieldKey, e.target.value)}
+            required={field.required !== false}
+            type={"email"} />)
         break;
       default:
         inputField = (
@@ -339,7 +363,7 @@ export default function TaskDetails() {
                         return (
                           <div key={fieldKey} className="sm:col-span-2">
                             <div className='flex justify-between'>
-                              <dt className="text-base font-medium text-slate-700">{`${field.name || fieldKey} `}<span className={classNames(!!field.required === false ? "hidden" : "", "text-red-500")}>*</span><span className='font-normal text-sm text-slate-500 italic'>{`(${field.type})`}</span></dt>
+                              <dt className="text-base font-medium text-slate-700">{`${field.name || fieldKey} `}<span className={classNames(field.required === false ? "hidden" : "", "text-red-500")}>*</span><span className='font-normal text-sm text-slate-500 italic'>{`(${field.type})`}</span></dt>
                               <div className='bg-slate-200 px-2 py-1 rounded-lg text-xs text-slate-500 font-bold font-mono'>{fieldKey}</div>
 
                             </div>

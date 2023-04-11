@@ -1236,12 +1236,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@onuhq/node@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@onuhq/node/-/node-0.2.0.tgz#ef75570f65af3b91e65d0a838439249a17e7fc8f"
-  integrity sha512-u5ZCrZ3P3CIJAMPVFGUhZBmBs6leto9M4/QNjYxcHizFnhwaiMHlwsMJ/Z13ZXmgLZxLZ0ol6zNUh2JDEkV33w==
+"@onuhq/node@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@onuhq/node/-/node-0.3.4.tgz#347aba09b224927c1cda50c57603aa0d82a564f6"
+  integrity sha512-XlgaSVBnvhZYRv3i7nx8CaplpLJTD0oH8pnjH6ugD+KRgWPNRQobbz8xjRTxcRD9iISRxPICEIj0s8kW0twfpw==
   dependencies:
     fs-extra "^11.1.1"
+    tslib "^2.5.0"
 
 "@pkgr/utils@^2.3.1":
   version "2.3.1"
@@ -3843,10 +3844,10 @@ typed-array-length@^1.0.4:
     for-each "^0.3.3"
     is-typed-array "^1.1.9"
 
-typescript@5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.2.tgz#891e1a90c5189d8506af64b9ef929fca99ba1ee5"
-  integrity sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==
+typescript@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.4.tgz#b217fd20119bd61a94d4011274e0ab369058da3b"
+  integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
