@@ -1,6 +1,6 @@
 export interface Field {
   name: string;
-  type: "string" | "text" | "number" | "boolean" | "select" | "csv";
+  type: "string" | "text" | "number" | "boolean" | "select" | "csv" | "email";
   description?: string;
   options?: Array<string>;
   required?: boolean;
