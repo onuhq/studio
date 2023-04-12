@@ -162,7 +162,7 @@ export default function TaskDetails() {
     setIdCopied(true);
     copyToClipboard(text);
   }
-
+  let validationError;
   const validateForm = () => {
     for (let fv of fieldValues) {
       // For boolean fields, ensure that the value is a boolean
@@ -171,6 +171,7 @@ export default function TaskDetails() {
         if (typeof fv.value === "boolean") {
           continue;
         } else {
+          validationError = "Please fill in all required fields"
           return false;
         }
       }
@@ -188,15 +189,18 @@ export default function TaskDetails() {
         }
 
         if (fv.required && !fv.value) {
+          validationError = "Please fill in all required fields"
           return false
         }
 
         if (!emailIsValid(fv.value as string)) {
+          validationError = "Please enter a valid email address"
           return false;
         }
 
       }
       if (fv.required && !fv.value) {
+        validationError = "Please fill in all required fields"
         return false
       }
     }
@@ -273,6 +277,8 @@ export default function TaskDetails() {
     )
   }
 
+  const runButtonDisabled = !validateForm() || isSubmitting
+
   return (
     <>
       <Head>
@@ -322,10 +328,11 @@ export default function TaskDetails() {
                 </div>
                 <div className="justify-stretch mt-6 flex flex-col-reverse space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
 
-
-                  <Button onClick={runTask} isDisabled={!validateForm() || isSubmitting} leftIcon={isSubmitting ? <Spinner size={'sm'} /> : <PlayIcon height={18} />} colorScheme='blue' variant='solid'>
-                    Run
-                  </Button>
+                  <Tooltip isDisabled={!runButtonDisabled} label={validationError}>
+                    <Button onClick={runTask} isDisabled={runButtonDisabled} leftIcon={isSubmitting ? <Spinner size={'sm'} /> : <PlayIcon height={18} />} colorScheme='blue' variant='solid'>
+                      Run
+                    </Button>
+                  </Tooltip>
                   {/* <Menu>
                     <MenuButton
                       as={IconButton}
