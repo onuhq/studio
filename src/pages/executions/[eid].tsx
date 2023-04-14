@@ -244,6 +244,8 @@ export default function TaskExecution() {
       <Head>
         <title>Onu</title>
         <meta name="description" content="Task Execution" />
+        <link rel="icon" href="/images/favicon.ico" />
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="min-h-full">

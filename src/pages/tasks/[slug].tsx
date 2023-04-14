@@ -282,6 +282,8 @@ export default function TaskDetails() {
       <Head>
         <title>Onu</title>
         <meta name="description" content="Task Details" />
+        <link rel="icon" href="/images/favicon.ico" />
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="min-h-full">
