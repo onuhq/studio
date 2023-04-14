@@ -1,8 +1,7 @@
-import { Task } from "@/types"
-import { OnuClient } from "@onuhq/node"
-process.env.ONU_INTERNAL__DEBUG_MODE = "true"
+const fse = require('fs-extra')
+const onu = require('@onuhq/node')
 
-class DevClient extends OnuClient {
+class DevClient extends onu.OnuClient {
   constructor() {
     super({
       apiKey: "sk_test_123",
@@ -10,7 +9,7 @@ class DevClient extends OnuClient {
     })
   }
 
-  async getAllTasks(): Promise<Array<Task>> {
+  async getAllTasks() {
     await this.init()
     return Object.keys(this.tasks).map((key) => {
       return {
@@ -22,13 +21,16 @@ class DevClient extends OnuClient {
       }
     })
   }
-
-  async getTaskBySlug(slug: string) {
-    await this.init()
-    return this.tasks[slug];
-  }
 }
 
 const devClient = new DevClient()
 
-export default devClient;
+const main = async () => {
+  await devClient.init()
+  const tasks = await devClient.getAllTasks()
+  // create the tasks.json file if it doesn't exist
+  await fse.ensureFile('./tasks.json')
+  fse.writeJSONSync('./tasks.json', tasks)
+}
+
+main();

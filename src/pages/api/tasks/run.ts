@@ -49,7 +49,7 @@ export default async function handler(
   const { slug, rawInput } = req.body
   const input = convertInput(rawInput)
   await devClient.init()
-  const task = devClient.getTaskBySlug(slug as string) || null
+  const task = await devClient.getTaskBySlug(slug as string) || null
   if (!task) {
     res.status(404).send('Task not found')
     return

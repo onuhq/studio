@@ -10,9 +10,11 @@ import { Tooltip } from '@chakra-ui/react'
 import csv from 'csvtojson';
 import { FileUploader } from "react-drag-drop-files";
 import { DateTime } from 'luxon'
-import { Field, IndexedField, Task } from '@/types'
+import { Execution, Field, IndexedField, Task } from '@/types'
 import ExecutionTable from '@/components/ExecutionTable'
 const fileTypes = ["CSV"];
+import jsonTasks from '../../../tasks.json'
+import { json } from 'stream/consumers'
 
 
 interface FieldValue {
@@ -46,29 +48,20 @@ export default function TaskDetails() {
   const [sdkVersion, setSdkVersion] = useState("");
   const [initialValueSet, setInitialValueSet] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [task, setTask] = useState<Task | null>(null);
   const [input, setInput] = useState<IndexedField>({});
   const [executions, setExecutions] = useState<any[]>([]);
+  const [unpaginatedTasks, setUnpaginatedTasks] = useState<Task[]>([])
 
-  const getTask = useCallback(async (withLoading: boolean) => {
-    if (task) {
-      return;
-    }
-    if (withLoading) {
-      setIsLoading(true);
-    }
-    try {
-      const resp = await axios.get(`/api/tasks/${slug}`)
-      setTask(resp.data.task);
-      setExecutions(resp.data.executions);
-      setSdkVersion(resp.data.version)
-    } catch (e: any) {
-      setError(e);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [slug, task])
+  const fetchTasks = useCallback(async () => {
+    // @ts-ignore
+    const matchingTask = jsonTasks.find(t => t.slug === slug) as Task;
+    const resp = await axios.get(`/api/tasks/${slug}`);
+    setTask(matchingTask);
+    setExecutions(resp.data.executions);
+    setSdkVersion(resp.data.version)
+  }, [slug])
 
 
   const resetFieldValues = useCallback(() => {
@@ -87,14 +80,19 @@ export default function TaskDetails() {
   }, [task])
 
   useEffect(() => {
-    if (!task) {
-      getTask(true);
-    }
+    fetchTasks();
+
     if (task && !initialValueSet) {
       resetFieldValues()
       setInitialValueSet(true);
     }
-  }, [initialValueSet, resetFieldValues, getTask, task])
+
+    // reset field values if the input values of tasks have change since the last render
+    if (task && initialValueSet && task.input && JSON.stringify(task.input) !== JSON.stringify(input)) {
+      resetFieldValues()
+    }
+
+  }, [initialValueSet, resetFieldValues, task, fetchTasks, input])
 
 
   if (error) return <div>failed to load</div>

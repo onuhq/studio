@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Task } from '@/types'
 import axios from 'axios'
+import jsonTasks from '../../tasks.json'
 
 const yaml = require('js-yaml');
 
@@ -43,8 +44,8 @@ export default function Home() {
   const [page, setPage] = useState(0);
 
   const fetchTasks = async () => {
-    const res = await axios.get('/api/tasks')
-    setUnpaginatedTasks(res.data.tasks)
+    // @ts-ignore
+    setUnpaginatedTasks(jsonTasks)
     setIsLoading(false)
   }
 
