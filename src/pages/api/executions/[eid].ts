@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Execution } from '@/types'
 import cache from '@/lib/db';
-import devClient from '@/lib/devClient';
+import jsonTasks from '../../../../tasks.json'
 
 
 type Data = {
@@ -16,15 +16,14 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { eid } = req.query
-  if (Object.keys(devClient.tasks).length === 0) {
-    await devClient.init()
-  }
+
   const executions: Execution[] = await cache.get('executions') || []
 
   const execution = executions.find((e) => e.eid === eid) || null
-  const task = devClient.getTaskBySlug(execution?.taskSlug as string) || null
+  const task = jsonTasks.find((t: any) => t.slug === execution?.taskSlug) || null
 
   if (task && execution) {
+    // @ts-ignore
     execution['task'] = task
   }
   res.status(200).json({ execution })

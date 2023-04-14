@@ -1236,10 +1236,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@onuhq/node@^0.3.5":
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/@onuhq/node/-/node-0.3.5.tgz#9d9bbf84d4b274c0f0b348ae15f3fce4bfd003fa"
-  integrity sha512-sQqcC3/pEim1N/27JhxLT2a70US8Bhm/NZ8lkxhpwuoYnJsh/bFiV+4KZpE50iG4UcQpNzD9wpe8UqvVlgRBuQ==
+"@onuhq/node@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@onuhq/node/-/node-0.3.6.tgz#945e7b74d0c9c67440af027793e5e4ef03781801"
+  integrity sha512-K3oXhhOiX9sdQluYZ2eLtSpGql8HvSomcDsDyi6FWq8UAwWksf/Okuia5vnAV1psdvdkCElbFC+ruFwmC/fa9g==
   dependencies:
     fs-extra "^11.1.1"
     tslib "^2.5.0"
