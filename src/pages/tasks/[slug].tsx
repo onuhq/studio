@@ -57,32 +57,11 @@ export default function TaskDetails() {
   const fetchTasks = useCallback(async () => {
     // @ts-ignore
     const matchingTask = jsonTasks.find(t => t.slug === slug) as Task;
+    const resp = await axios.get(`/api/tasks/${slug}`);
     setTask(matchingTask);
+    setExecutions(resp.data.executions);
+    setSdkVersion(resp.data.version)
   }, [slug])
-
-  const getTask = useCallback(async (withLoading: boolean) => {
-    if (task) {
-      return;
-    }
-    if (withLoading) {
-      setIsLoading(true);
-    }
-    try {
-      const matchingTask = unpaginatedTasks.find(t => t.slug === slug) as Task;
-
-      // if (!matchingTask) {
-      //   setError('Task not found');
-      // }
-      // @ts-ignore
-      setTask(matchingTask);
-      setExecutions([]);
-      setSdkVersion('do this later')
-    } catch (e: any) {
-      setError(e);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [slug, task, unpaginatedTasks])
 
 
   const resetFieldValues = useCallback(() => {
@@ -101,16 +80,6 @@ export default function TaskDetails() {
   }, [task])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      axios.get("/api/isBuilding").then(response => {
-        console.log(response.data);
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
     fetchTasks();
 
     if (task && !initialValueSet) {
@@ -123,7 +92,7 @@ export default function TaskDetails() {
       resetFieldValues()
     }
 
-  }, [initialValueSet, resetFieldValues, getTask, task, fetchTasks, input])
+  }, [initialValueSet, resetFieldValues, task, fetchTasks, input])
 
 
   if (error) return <div>failed to load</div>

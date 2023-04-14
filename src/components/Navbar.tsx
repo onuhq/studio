@@ -10,7 +10,7 @@ const TestModeBanner = () => {
   return (
     <div className="bg-orange-300 h-1 flex items-center justify-center flex-row w-full z-10">
       <div className='h-12 w-32 rounded-b-lg flex items-end justify-center pb-1 bg-orange-300 self-center -z-10'>
-        <p className='text-xs font-bold text-white'>TESTMODE</p>
+        <p className='text-xs font-bold text-white'>LOCAL MODE</p>
       </div>
     </div>
   )
@@ -32,7 +32,8 @@ export default function Navbar() {
             <Popover className="flex h-16 justify-between">
               <div className="flex px-2 lg:px-0">
                 <div className="flex flex-shrink-0 items-center">
-                  <Link href={"/"}>
+                  <Link className='flex items-center' href={"/"}>
+
                     <Image
                       src="/images/onu_logo.png"
                       alt="Onu"
@@ -41,8 +42,9 @@ export default function Navbar() {
                       className="-ml-3"
                       priority
                     />
+
+                    <p className='ml-2 font-bold text-lg'>Studio</p>
                   </Link>
-                  <p className='font-bold text-lg cursor-default'>Studio</p>
                 </div>
                 <nav aria-label="Global" className="hidden lg:ml-6 lg:flex lg:items-center lg:space-x-4">
                   {navigation.map((item) => {
